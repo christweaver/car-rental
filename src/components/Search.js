@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { useEffect } from "react";
 export default function Search() {
-  const [puLocation, setpuLocation] = useState("");
-  const [doLocation, setdoLocation] = useState("");
+  const [puLocation, setpuLocation] = useState(null);
+  const [doLocation, setdoLocation] = useState(null);
   const [puDate, setpuDate] = useState("");
   const [doDate, setdoDate] = useState("");
   const [puTime, setpuTime] = useState("");
@@ -25,12 +27,16 @@ export default function Search() {
     return dateTimeFormat.format(parsedDate);
   };
 
+  const formatLocation = ({ value }) => {
+    const [termOption] = value.terms;
+    return termOption.value;
+  };
   function search(e) {
     e.preventDefault();
 
     const searchBar = {
-      pickUp: puLocation,
-      dropOff: doLocation,
+      pickUp: formatLocation(puLocation),
+      dropOff: formatLocation(doLocation),
       pickUpDate: formatDateTime(puDate),
       dropOffDate: formatDateTime(doDate),
       pickUpTime: puTime,
@@ -42,28 +48,66 @@ export default function Search() {
     router.push(`/chooseCar/${encodeURIComponent(serializedCarObject)}`);
   }
 
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: "12px 16px", // py-3 and px-4
+      margin: "8px 8px 8px 0", // mx-2 and mb-2
+      border: "1px solid #ccc", // border with a default color
+      borderRadius: "6px", // rounded-md
+    }),
+    // You can add more custom styles for other parts like menu, option, etc.
+  };
   return (
     <form
       onSubmit={search}
       className="flex justify-center items-center rounded-xl w-fit  mx-auto absolute -bottom-11 left-1/2 transform -translate-x-1/2 shadow-2xl"
     >
       <div className="flex flex-col w-96">
-        <input
+        {/* <input
           type="text"
           placeholder="Pickup location"
           className="px-4 py-3 mx-2 mb-2 border rounded-md"
           name="puLocation"
           value={puLocation}
           onChange={(e) => setpuLocation(e.target.value)}
+        /> */}
+        <GooglePlacesAutocomplete
+          apiKey="AIzaSyC-j4y1h-28ZVSr_YyTfPrOsQ1YxOVMygY"
+          name="puLocation"
+          selectProps={{
+            value: puLocation,
+            onChange: setpuLocation,
+            styles: customStyles,
+            placeholder: "Pickup location",
+          }}
+          autocompletionRequest={{
+            types: ["airport"],
+            country: ["us"],
+          }}
         />
-        <input
+        <GooglePlacesAutocomplete
+          apiKey="AIzaSyC-j4y1h-28ZVSr_YyTfPrOsQ1YxOVMygY"
+          name="puLocation"
+          selectProps={{
+            value: doLocation,
+            onChange: setdoLocation,
+            styles: customStyles,
+            placeholder: "Drop Off location",
+          }}
+          autocompletionRequest={{
+            types: ["airport"],
+            country: ["us"],
+          }}
+        />
+        {/* <input
           type="text"
           placeholder="Dropoff location"
           className="px-4 py-3 mx-2 border  rounded-md focus:outline-none"
           value={doLocation}
           name="doLocation"
           onChange={(e) => setdoLocation(e.target.value)}
-        />
+        /> */}
       </div>
 
       <div className="flex flex-col">
