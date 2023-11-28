@@ -2,26 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white; /* Add your desired background color */
+  /* padding: 10px 20px; */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Add a subtle box shadow */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.navbar__logo {
+  /* Text color for the logo */
+  color: #ffcc00;
+  font-size: 30px;
+  text-decoration: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.navbar__links {
+  display: flex;
+}
+
+.navbar__link {
+  margin-right: 20px;
+  color: black; /* Text color for the links */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.navbar__link:hover {
+  color: #ffcc00;
+}
+
+.custom-image {
+  background-image: url("https://images.unsplash.com/photo-1551952237-954a0e68786c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.bg-discount-gradient {
+  background: linear-gradient(125.17deg, #2c2b2b 0%, #898893 100%);
 }
