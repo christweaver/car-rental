@@ -3,9 +3,104 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useEffect } from "react";
+const pLocactionStart = {
+  label:
+    "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
+  value: {
+    description:
+      "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
+    matched_substrings: [
+      {
+        length: 4,
+        offset: 0,
+      },
+    ],
+    place_id: "ChIJ6fTXZ4vzUocRGUhZ9SZDH28",
+    reference: "ChIJ6fTXZ4vzUocRGUhZ9SZDH28",
+    structured_formatting: {
+      main_text: "Salt Lake City International Airport (SLC)",
+      main_text_matched_substrings: [
+        {
+          length: 4,
+          offset: 0,
+        },
+      ],
+      secondary_text: "West Terminal Drive, Salt Lake City, UT, USA",
+    },
+    terms: [
+      {
+        offset: 0,
+        value: "Salt Lake City International Airport (SLC)",
+      },
+      {
+        offset: 44,
+        value: "West Terminal Drive",
+      },
+      {
+        offset: 65,
+        value: "Salt Lake City",
+      },
+      {
+        offset: 81,
+        value: "UT",
+      },
+      {
+        offset: 85,
+        value: "USA",
+      },
+    ],
+    types: ["airport", "point_of_interest", "establishment"],
+  },
+};
+const dLocationStart = {
+  label:
+    "San Francisco International Airport (SFO) (SFO), San Francisco, CA, USA",
+  value: {
+    description:
+      "San Francisco International Airport (SFO) (SFO), San Francisco, CA, USA",
+    matched_substrings: [
+      {
+        length: 2,
+        offset: 0,
+      },
+    ],
+    place_id: "ChIJVVVVVYx3j4ARP-3NGldc8qQ",
+    reference: "ChIJVVVVVYx3j4ARP-3NGldc8qQ",
+    structured_formatting: {
+      main_text: "San Francisco International Airport (SFO) (SFO)",
+      main_text_matched_substrings: [
+        {
+          length: 2,
+          offset: 0,
+        },
+      ],
+      secondary_text: "San Francisco, CA, USA",
+    },
+    terms: [
+      {
+        offset: 0,
+        value: "San Francisco International Airport (SFO) (SFO)",
+      },
+      {
+        offset: 49,
+        value: "San Francisco",
+      },
+      {
+        offset: 64,
+        value: "CA",
+      },
+      {
+        offset: 68,
+        value: "USA",
+      },
+    ],
+    types: ["airport", "point_of_interest", "establishment"],
+  },
+};
+
 export default function Search() {
-  const [puLocation, setpuLocation] = useState(null);
-  const [doLocation, setdoLocation] = useState(null);
+  const [puLocation, setpuLocation] = useState(pLocactionStart);
+  const [doLocation, setdoLocation] = useState(dLocationStart);
   const [puDate, setpuDate] = useState("");
   const [doDate, setdoDate] = useState("");
   const [puTime, setpuTime] = useState("");
@@ -14,17 +109,8 @@ export default function Search() {
   const router = useRouter();
 
   const formatDateTime = (dateTimeString) => {
-    const parsedDate = new Date(dateTimeString.replace(" ", "T"));
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      // hour: "numeric",
-      // minute: "numeric",
-      // hour12: true,
-    };
-    const dateTimeFormat = new Intl.DateTimeFormat("en-US", options);
-    return dateTimeFormat.format(parsedDate);
+    console.log({ dateTimeString });
+    return dateTimeString;
   };
 
   const formatLocation = ({ value }) => {
@@ -43,6 +129,7 @@ export default function Search() {
       dropOffTime: doTime,
     };
 
+    console.log(puLocation, doLocation, puDate, doDate, puTime, doTime);
     const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
 
     router.push(`/chooseCar/${encodeURIComponent(serializedCarObject)}`);

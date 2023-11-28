@@ -10,6 +10,10 @@ import mustang from "../assests/mustang1.png";
 import ford from "../assests/ford.jpg";
 import chevy from "../assests/chevy.jpg";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
+var duration = require("dayjs/plugin/duration");
+dayjs.extend(duration);
+import { useEffect, useState } from "react";
 
 const carOptions = [
   {
@@ -24,7 +28,6 @@ const carOptions = [
 
     rentalPrice: {
       perDay: 50,
-      total: 60,
     },
   },
   {
@@ -39,7 +42,6 @@ const carOptions = [
 
     rentalPrice: {
       perDay: 60,
-      total: 70,
     },
   },
   {
@@ -54,7 +56,6 @@ const carOptions = [
 
     rentalPrice: {
       perDay: 70,
-      total: 90,
     },
   },
   {
@@ -69,7 +70,6 @@ const carOptions = [
 
     rentalPrice: {
       perDay: 100,
-      total: 120,
     },
   },
 
@@ -85,7 +85,6 @@ const carOptions = [
 
     rentalPrice: {
       perDay: 80,
-      total: 100,
     },
   },
   {
@@ -99,17 +98,21 @@ const carOptions = [
     image: chevy,
     rentalPrice: {
       perDay: 90,
-      total: 120,
     },
   },
 ];
 
 export default function CarSelection() {
+  const [days, setdays] = useState(0);
   let router = useRouter();
   const { query } = router;
 
+  const getStateFromUrl = () => {
+    return JSON.parse(decodeURIComponent(query.searchBar));
+  };
+
   function change(carInfo) {
-    const search = JSON.parse(decodeURIComponent(query.searchBar));
+    const search = getStateFromUrl();
     const {
       pickUp,
       dropOff,
@@ -132,12 +135,41 @@ export default function CarSelection() {
       pickUpTime,
       dropOffTime,
     };
-    console.log(searchBar.pickUpDate);
 
     const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
 
     router.push(`/carReserve/${encodeURIComponent(serializedCarObject)}`);
   }
+
+  useEffect(() => {
+    const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
+      getStateFromUrl();
+
+    const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
+    console.log({ days });
+    setdays(days);
+  }, []);
+  const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
+    const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
+
+    const dropOffDateFormatted = dayjs(dropOffDate + " " + dropOffTime);
+    const numberOfHours = dayjs
+      .duration(dropOffDateFormatted.diff(pickUpFormatted))
+      .asHours();
+    console.log({ numberOfHours });
+
+    const HOURS_IN_A_DAY = 24;
+    if (numberOfHours < HOURS_IN_A_DAY) return 1;
+
+    const numberOfDays = numberOfHours / HOURS_IN_A_DAY;
+    const remainder = numberOfHours % HOURS_IN_A_DAY;
+
+    if (remainder) {
+      return Math.floor(numberOfDays + 1);
+    }
+    console.log({ numberOfDays, remainder });
+    return numberOfDays;
+  };
 
   return (
     <div className="bg-zinc-100">
@@ -191,7 +223,7 @@ export default function CarSelection() {
                 </div>
                 <div className="flex flex-col">
                   <h2 className="text-[32px] font-semibold font-sans">
-                    ${carInfo.rentalPrice.total}
+                    ${carInfo.rentalPrice.perDay * days}
                   </h2>
                   <h2 className="text-[18px] text-gray-500">Total</h2>
                 </div>

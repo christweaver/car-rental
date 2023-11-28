@@ -3,8 +3,8 @@ import arrow from "../assests/arrow.png";
 import check from "../assests/check.jpg";
 import { useState } from "react";
 import Review from "./Review";
+import dayjs from "dayjs";
 export default function CompletedBanner({ searchInfo }) {
-  console.log(searchInfo.rentalPrice);
   // const [tax, setTax] = useState(0.1); // Assuming tax is 10% of the total cost
 
   // const calculateTotal = () => {
@@ -21,10 +21,12 @@ export default function CompletedBanner({ searchInfo }) {
           <Image src={arrow} className="w-[30px] h-[30px] ml-20 "></Image>
         </div>
         <h1 className="ml-8 font-thin">
-          {searchInfo.pickUpDate}, {searchInfo.pickUpTime}
+          {dayjs(searchInfo.pickUpDate).format("MMM DD, YYYY")},{" "}
+          {searchInfo.pickUpTime}
         </h1>
         <h1 className="ml-8 font-thin">
-          {searchInfo.dropOffDate}, {searchInfo.dropOffTime}
+          {dayjs(searchInfo.dropOffDate).format("MMM DD, YYYY")},{" "}
+          {searchInfo.dropOffTime}
         </h1>
       </div>
       <div className="flex flex-col items-start">
