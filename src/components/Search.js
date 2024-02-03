@@ -100,8 +100,8 @@ const dLocationStart = {
 };
 
 export default function Search() {
-  const [puLocation, setpuLocation] = useState(pLocactionStart);
-  const [doLocation, setdoLocation] = useState(dLocationStart);
+  const [puLocation, setpuLocation] = useState("");
+  const [doLocation, setdoLocation] = useState("");
   const [puDate, setpuDate] = useState("");
   const [doDate, setdoDate] = useState("");
   const [puTime, setpuTime] = useState("");
