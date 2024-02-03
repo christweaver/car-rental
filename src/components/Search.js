@@ -100,8 +100,8 @@ const dLocationStart = {
 };
 
 export default function Search() {
-  const [puLocation, setpuLocation] = useState("");
-  const [doLocation, setdoLocation] = useState("");
+  const [puLocation, setpuLocation] = useState(pLocactionStart);
+  const [doLocation, setdoLocation] = useState(dLocationStart);
   const [puDate, setpuDate] = useState("");
   const [doDate, setdoDate] = useState("");
   const [puTime, setpuTime] = useState("");
@@ -161,7 +161,6 @@ export default function Search() {
     >
       <div className="flex flex-col w-96">
         <GooglePlacesAutocomplete
-          apiKey={apiKey}
           name="puLocation"
           selectProps={{
             value: puLocation,
@@ -174,9 +173,9 @@ export default function Search() {
             types: ["airport"],
             country: ["us"],
           }}
+          apiKey={apiKey}
         />
         <GooglePlacesAutocomplete
-          apiKey={apiKey}
           name="puLocation"
           selectProps={{
             value: doLocation,
@@ -189,6 +188,7 @@ export default function Search() {
             types: ["airport"],
             country: ["us"],
           }}
+          apiKey={apiKey}
         />
       </div>
 
