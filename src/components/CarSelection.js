@@ -96,9 +96,15 @@ export default function CarSelection() {
   let router = useRouter();
   const { query } = router;
   const getStateFromUrl = useCallback(() => {
-    return JSON.parse(decodeURIComponent(query.searchBar));
+    if (query.searchBar) {
+      try {
+        return JSON.parse(decodeURIComponent(query.searchBar));
+      } catch (error) {
+        console.error("Error parsing searchBar:", error);
+      }
+    }
+    return null;
   }, [query.searchBar]);
-
   useEffect(() => {
     const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
       getStateFromUrl();
