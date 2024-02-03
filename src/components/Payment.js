@@ -23,24 +23,24 @@ export default function Payment({ searchInfo }) {
     console.log("Payment submitted");
   };
 
-  const [days, setdays] = useState(0);
+  const [days, setDays] = useState(0);
   const [tax, setTax] = useState(0.1);
   let taxTotal = rentalPrice * tax;
   console.log(taxTotal);
   let router = useRouter();
   const { query } = router;
 
-  const getStateFromUrl = () => {
-    return JSON.parse(decodeURIComponent(query.searchBar));
-  };
   useEffect(() => {
+    const getStateFromUrl = () => {
+      return JSON.parse(decodeURIComponent(query.searchBar));
+    };
+
     const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
       getStateFromUrl();
     console.log(pickUpDate);
     const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
-    console.log({ days });
-    setdays(days);
-  }, [getStateFromUrl]);
+    setDays(days);
+  }, [query.searchBar]);
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
 
