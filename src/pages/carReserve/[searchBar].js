@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import CompletedBanner from "@/components/CompletedBanner";
 import Navbar from "@/components/Navbar";
 import Payment from "@/components/Payment";
@@ -6,14 +7,35 @@ import { useRouter } from "next/router";
 export default function ReserveCar() {
   const router = useRouter();
   const { query } = router;
-  console.log(query.searchBar);
-  const searchInfo = JSON.parse(decodeURIComponent(query.searchBar));
+  const [searchInfo, setSearchInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (query.searchBar) {
+          const decodedSearchBar = decodeURIComponent(query.searchBar);
+          const parsedSearchInfo = JSON.parse(decodedSearchBar);
+          setSearchInfo(parsedSearchInfo);
+        }
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
+    };
+
+    fetchData();
+  }, [query.searchBar]);
 
   return (
     <div>
       <Navbar />
-      <CompletedBanner searchInfo={searchInfo} />
-      <Payment searchInfo={searchInfo} />
+      {searchInfo ? (
+        <>
+          <CompletedBanner searchInfo={searchInfo} />
+          <Payment searchInfo={searchInfo} />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

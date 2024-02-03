@@ -1,22 +1,43 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import CompletedBanner from "@/components/CompletedBanner";
 import CarSelection from "@/components/CarSelection";
+
 export default function ChooseCar() {
   const router = useRouter();
   const { query } = router;
-  // console.log(query.searchBar);
+  const [searchInfo, setSearchInfo] = useState(null);
 
-  // Decode the query parameter and parse it as JSON
-  const searchInfo = JSON.parse(decodeURIComponent(query.searchBar));
+  useEffect(() => {
+    const fetchData = async () => {
+      if (query.searchBar) {
+        try {
+          const decodedSearchBar = decodeURIComponent(query.searchBar);
+          const parsedSearchInfo = JSON.parse(decodedSearchBar);
+          setSearchInfo(parsedSearchInfo);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [query.searchBar]);
 
   return (
     <div>
       <div className="">
         <Navbar />
       </div>
-      <CompletedBanner searchInfo={searchInfo} />
-      <CarSelection />
+      {searchInfo ? (
+        <>
+          <CompletedBanner searchInfo={searchInfo} />
+          <CarSelection />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

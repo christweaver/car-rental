@@ -1,25 +1,18 @@
-import Payment from "@/components/Payment";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import CarCard from "@/components/CarCard";
+import Payment from "@/components/Payment";
 import Link from "next/link";
 import logo from "../../assests/logo.png";
 import Image from "next/image";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+
 let apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
 export default function SearchBar() {
   const router = useRouter();
   const { query } = router;
-  const formatLocation = ({ value }) => {
-    const [termOption] = value.terms;
-    return termOption.value;
-  };
-  const searchInfo = JSON.parse(decodeURIComponent(query.searchBar));
-  const { rentalPrice, name, year, brand } = searchInfo;
-  console.log(searchInfo);
-
-  console.log(rentalPrice);
+  const [searchInfo, setSearchInfo] = useState(null);
   const [puLocation, setpuLocation] = useState("");
   const [doLocation, setdoLocation] = useState("");
   const [puDate, setpuDate] = useState("");
@@ -27,26 +20,52 @@ export default function SearchBar() {
   const [puTime, setpuTime] = useState("");
   const [doTime, setdoTime] = useState("");
 
-  console.log(searchInfo);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (query.searchBar) {
+        try {
+          const decodedSearchBar = decodeURIComponent(query.searchBar);
+          const parsedSearchInfo = JSON.parse(decodedSearchBar);
+          setSearchInfo(parsedSearchInfo);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [query.searchBar]);
+
+  const formatLocation = ({ value }) => {
+    const [termOption] = value.terms;
+    return termOption.value;
+  };
+
   const handleInputChange = (e) => {
     e.preventDefault();
 
-    const searchInfo = {
-      puLocation: formatLocation(puLocation),
-      doLocation: formatLocation(doLocation),
-      pickUpDate: puDate,
-      dropOffDate: doDate,
-      pickUpTime: puTime,
-      dropOffTime: doTime,
-      rentalPrice,
-      name,
-      year,
-      brand,
-    };
+    if (searchInfo) {
+      const { rentalPrice, name, year, brand } = searchInfo;
 
-    const serializedCarObject = encodeURIComponent(JSON.stringify(searchInfo));
+      const updatedSearchInfo = {
+        puLocation: formatLocation(puLocation),
+        doLocation: formatLocation(doLocation),
+        pickUpDate: puDate,
+        dropOffDate: doDate,
+        pickUpTime: puTime,
+        dropOffTime: doTime,
+        rentalPrice,
+        name,
+        year,
+        brand,
+      };
 
-    router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
+      const serializedCarObject = encodeURIComponent(
+        JSON.stringify(updatedSearchInfo)
+      );
+
+      router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
+    }
   };
 
   const customStyles = {
@@ -57,8 +76,8 @@ export default function SearchBar() {
       border: "1px solid #ccc", // border with a default color
       borderRadius: "6px", // rounded-md
     }),
-    // You can add more custom styles for other parts like menu, option, etc.
   };
+
   const dropStyles = {
     control: (base) => ({
       ...base,
@@ -68,6 +87,7 @@ export default function SearchBar() {
       borderRadius: "6px", // rounded-md
     }),
   };
+
   return (
     <form onSubmit={handleInputChange} className="">
       <div className="flex mt-1 border-solid border-b-2 bg-gray-50">
@@ -154,10 +174,16 @@ export default function SearchBar() {
       </div>
 
       <div className="flex flex-column mt-4">
-        <CarCard searchInfo={searchInfo} />
-        <div className="w-full">
-          <Payment searchInfo={searchInfo} />
-        </div>
+        {searchInfo ? (
+          <>
+            <CarCard searchInfo={searchInfo} />
+            <div className="w-full">
+              <Payment searchInfo={searchInfo} />
+            </div>
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </form>
   );

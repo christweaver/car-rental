@@ -10,8 +10,8 @@ import mustang from "../assests/mustang1.png";
 import ford from "../assests/ford.jpg";
 import chevy from "../assests/chevy.jpg";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
 import dayjs from "dayjs";
+import { useCallback } from "react";
 var duration = require("dayjs/plugin/duration");
 dayjs.extend(duration);
 import { useEffect, useState } from "react";
@@ -92,33 +92,52 @@ const carOptions = [
 ];
 
 export default function CarSelection() {
-  const [days, setDays] = useState(0);
+  const [days, setdays] = useState(0);
   let router = useRouter();
   const { query } = router;
+
   const getStateFromUrl = useCallback(() => {
-    if (query.searchBar) {
-      try {
-        return JSON.parse(decodeURIComponent(query.searchBar));
-      } catch (error) {
-        console.error("Error parsing searchBar:", error);
-      }
-    }
-    return null;
+    return JSON.parse(decodeURIComponent(query.searchBar));
   }, [query.searchBar]);
+
+  function change(carInfo) {
+    const search = getStateFromUrl();
+    const {
+      pickUp,
+      dropOff,
+      pickUpDate,
+      dropOffDate,
+      pickUpTime,
+      dropOffTime,
+    } = search;
+
+    let { types, brand, rentalPrice } = carInfo;
+
+    const searchBar = {
+      types,
+      brand,
+      rentalPrice,
+      pickUp,
+      dropOff,
+      pickUpDate,
+      dropOffDate,
+      pickUpTime,
+      dropOffTime,
+    };
+
+    const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
+
+    router.push(`/carReserve/${encodeURIComponent(serializedCarObject)}`);
+  }
+
   useEffect(() => {
     const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
       getStateFromUrl();
 
-    const calculatedDays = countDays(
-      pickUpDate,
-      dropOffDate,
-      pickUpTime,
-      dropOffTime
-    );
-    console.log({ calculatedDays });
-    setDays(calculatedDays);
+    const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
+    console.log({ days });
+    setdays(days);
   }, [getStateFromUrl]);
-
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
 
@@ -140,39 +159,6 @@ export default function CarSelection() {
     console.log({ numberOfDays, remainder });
     return numberOfDays;
   };
-
-  const change = useCallback(
-    (carInfo) => {
-      const search = getStateFromUrl();
-      const {
-        pickUp,
-        dropOff,
-        pickUpDate,
-        dropOffDate,
-        pickUpTime,
-        dropOffTime,
-      } = search;
-
-      let { types, brand, rentalPrice } = carInfo;
-
-      const searchBar = {
-        types,
-        brand,
-        rentalPrice,
-        pickUp,
-        dropOff,
-        pickUpDate,
-        dropOffDate,
-        pickUpTime,
-        dropOffTime,
-      };
-
-      const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
-
-      router.push(`/carReserve/${encodeURIComponent(serializedCarObject)}`);
-    },
-    [getStateFromUrl, router]
-  );
 
   return (
     <div className="bg-zinc-100">
