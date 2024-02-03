@@ -1,17 +1,10 @@
 import Image from "next/image";
 import arrow from "../assests/arrow.png";
 import check from "../assests/check.jpg";
-import { useState } from "react";
 import Review from "./Review";
 import dayjs from "dayjs";
 export default function CompletedBanner({ searchInfo }) {
-  // const [tax, setTax] = useState(0.1); // Assuming tax is 10% of the total cost
-
-  // const calculateTotal = () => {
-  //   const total = searchInfo.rentalPrice.perDay + searchInfo.rentalPrice.perDay * tax;
-  //   return total.toFixed(2);
-  // };
-
+  console.log(searchInfo);
   return (
     <div className="flex flex-row justify-between border-2">
       <div className="flex flex-col items-start ml-16">

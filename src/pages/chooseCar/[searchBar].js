@@ -12,7 +12,7 @@ export default function ChooseCar() {
 
   return (
     <div>
-      <div className="mb-2">
+      <div className="">
         <Navbar />
       </div>
       <CompletedBanner searchInfo={searchInfo} />

@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <Link className="navbar__logo" href={"/"}>
-        <Image src={logo} alt="" className="w-[150px] h-[100px]"></Image>
+        <Image src={logo} alt="" className="w-[130px] h-[95px]"></Image>
       </Link>
       <div className="navbar__links mr-16 flex justify-between">
         <Link className="navbar__link pr-6" href={"/reservations"}>

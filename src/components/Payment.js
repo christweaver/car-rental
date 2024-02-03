@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import Review from "./Review";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
+import { useEffect } from "react";
+var duration = require("dayjs/plugin/duration");
+dayjs.extend(duration);
 
 export default function Payment({ searchInfo }) {
   const [firstName, setFirstName] = useState("");
@@ -13,17 +17,58 @@ export default function Payment({ searchInfo }) {
   const [cvv, setCvv] = useState("");
 
   const { rentalPrice } = searchInfo;
-
+  console.log(searchInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your payment processing logic here
     console.log("Payment submitted");
   };
 
+  const [days, setdays] = useState(0);
+  const [tax, setTax] = useState(0.1);
+  let taxTotal = rentalPrice * tax;
+  console.log(taxTotal);
+  let router = useRouter();
+  const { query } = router;
+
+  const getStateFromUrl = () => {
+    return JSON.parse(decodeURIComponent(query.searchBar));
+  };
+  useEffect(() => {
+    const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
+      getStateFromUrl();
+    console.log(pickUpDate);
+    const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
+    console.log({ days });
+    setdays(days);
+  }, [searchInfo]);
+  const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
+    const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
+
+    const dropOffDateFormatted = dayjs(dropOffDate + " " + dropOffTime);
+    const numberOfHours = dayjs
+      .duration(dropOffDateFormatted.diff(pickUpFormatted))
+      .asHours();
+    console.log({ numberOfHours });
+
+    const HOURS_IN_A_DAY = 24;
+    if (numberOfHours < HOURS_IN_A_DAY) return 1;
+
+    const numberOfDays = numberOfHours / HOURS_IN_A_DAY;
+    const remainder = numberOfHours % HOURS_IN_A_DAY;
+
+    if (remainder) {
+      return Math.floor(numberOfDays + 1);
+    }
+    console.log({ numberOfDays, remainder });
+    return numberOfDays;
+  };
+
   return (
-    <div className="flex flex-row items-center justify-center mb-8">
-      <div className=" w-3/5 ml-16  p-6 bg-white rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold mb-6">Payment Details</h2>
+    <div className="flex flex-row items-center justify-center mb-4 ">
+      <div className="p-6 rounded-md shadow-md w-3/4">
+        <div className="bg-gray-100">
+          <h2 className="text-2xl font-semibold mb-3 py-2">Payment Details</h2>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -161,11 +206,15 @@ export default function Payment({ searchInfo }) {
           </div>
           <div className="flex flex-col my-2">
             <h1 className="text-[24px] font-extrabold">
-              Subtotal: ${rentalPrice.total}
+              Subtotal: $
+              {!(rentalPrice * days + taxTotal)
+                ? 0
+                : rentalPrice * days + taxTotal}
             </h1>
+
             <button
               type="submit"
-              className="mx-auto px-3 border-2 py-3  bg-black text-yellow-500 rounded-lg text-[18px] hover:bg-blend-color-burn focus:outline-none focus:ring focus:border-blue-300"
+              className="mx-auto px-3 border-2 py-3  bg-black text-yellow-500 rounded-lg text-[18px] hover:bg-blend-color-burn"
             >
               Submit Payment
             </button>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useEffect } from "react";
+let apiKey = process.env.NEXT_PUBLIC_API_KEY;
 const pLocactionStart = {
   label:
     "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
@@ -138,12 +139,20 @@ export default function Search() {
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: "12px 16px", // py-3 and px-4
-      margin: "8px 8px 8px 0", // mx-2 and mb-2
+      padding: "7px 10px", // py-3 and px-4
+      margin: "8px 8px 0", // mx-2 and mb-2
       border: "1px solid #ccc", // border with a default color
       borderRadius: "6px", // rounded-md
     }),
-    // You can add more custom styles for other parts like menu, option, etc.
+  };
+  const dropStyles = {
+    control: (base) => ({
+      ...base,
+      padding: "7px 10px", // py-3 and px-4
+      margin: "8px 8px 8px", // mx-2 and mb-2
+      border: "1px solid #ccc", // border with a default color
+      borderRadius: "6px", // rounded-md
+    }),
   };
   return (
     <form
@@ -151,22 +160,15 @@ export default function Search() {
       className="flex justify-center items-center rounded-xl w-fit  mx-auto absolute -bottom-11 left-1/2 transform -translate-x-1/2 shadow-2xl"
     >
       <div className="flex flex-col w-96">
-        {/* <input
-          type="text"
-          placeholder="Pickup location"
-          className="px-4 py-3 mx-2 mb-2 border rounded-md"
-          name="puLocation"
-          value={puLocation}
-          onChange={(e) => setpuLocation(e.target.value)}
-        /> */}
         <GooglePlacesAutocomplete
-          apiKey="AIzaSyC-j4y1h-28ZVSr_YyTfPrOsQ1YxOVMygY"
+          apiKey={apiKey}
           name="puLocation"
           selectProps={{
             value: puLocation,
             onChange: setpuLocation,
             styles: customStyles,
             placeholder: "Pickup location",
+            required: true,
           }}
           autocompletionRequest={{
             types: ["airport"],
@@ -174,27 +176,20 @@ export default function Search() {
           }}
         />
         <GooglePlacesAutocomplete
-          apiKey="AIzaSyC-j4y1h-28ZVSr_YyTfPrOsQ1YxOVMygY"
+          apiKey={apiKey}
           name="puLocation"
           selectProps={{
             value: doLocation,
             onChange: setdoLocation,
-            styles: customStyles,
+            styles: dropStyles,
             placeholder: "Drop Off location",
+            required: true,
           }}
           autocompletionRequest={{
             types: ["airport"],
             country: ["us"],
           }}
         />
-        {/* <input
-          type="text"
-          placeholder="Dropoff location"
-          className="px-4 py-3 mx-2 border  rounded-md focus:outline-none"
-          value={doLocation}
-          name="doLocation"
-          onChange={(e) => setdoLocation(e.target.value)}
-        /> */}
       </div>
 
       <div className="flex flex-col">
@@ -205,6 +200,7 @@ export default function Search() {
           name="puDate"
           value={puDate}
           onChange={(e) => setpuDate(e.target.value)}
+          required
         />
         <input
           type="date"
@@ -213,6 +209,7 @@ export default function Search() {
           name="doDate"
           value={doDate}
           onChange={(e) => setdoDate(e.target.value)}
+          required
         />
       </div>
 
@@ -224,6 +221,7 @@ export default function Search() {
           name="puTime"
           value={puTime}
           onChange={(e) => setpuTime(e.target.value)}
+          required
         />
         <input
           type="time"
@@ -232,6 +230,7 @@ export default function Search() {
           name="doTime"
           value={doTime}
           onChange={(e) => setdoTime(e.target.value)}
+          required
         />
       </div>
       <button
@@ -243,26 +242,3 @@ export default function Search() {
     </form>
   );
 }
-
-// var model = "bmw";
-// const url = `https://api.api-ninjas.com/v1/cars?model=${model}`;
-
-// fetch(url, {
-//   method: "GET",
-//   headers: {
-//     "X-Api-Key": "rDQWVMbchCbGSiyyRN6xYg==wHroM5Z0oOdOgt9B",
-//     "Content-Type": "application/json",
-//   },
-// })
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     return response.json();
-//   })
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error.message);
-//   });

@@ -26,9 +26,7 @@ const carOptions = [
     transmission: "Automatic",
     image: kia,
 
-    rentalPrice: {
-      perDay: 50,
-    },
+    rentalPrice: 50,
   },
   {
     types: "Compact",
@@ -40,9 +38,7 @@ const carOptions = [
     transmission: "Automatic",
     image: corolla,
 
-    rentalPrice: {
-      perDay: 60,
-    },
+    rentalPrice: 60,
   },
   {
     types: "Convertible",
@@ -54,9 +50,7 @@ const carOptions = [
     transmission: "Automatic",
     image: mustang,
 
-    rentalPrice: {
-      perDay: 70,
-    },
+    rentalPrice: 70,
   },
   {
     types: "Sports",
@@ -68,9 +62,7 @@ const carOptions = [
     transmission: "Manual",
     image: audi1,
 
-    rentalPrice: {
-      perDay: 100,
-    },
+    rentalPrice: 100,
   },
 
   {
@@ -83,9 +75,7 @@ const carOptions = [
     transmission: "Automatic",
     image: ford,
 
-    rentalPrice: {
-      perDay: 80,
-    },
+    rentalPrice: 80,
   },
   {
     types: "SUV",
@@ -96,9 +86,7 @@ const carOptions = [
     backupCamera: "Rearview Camera",
     transmission: "Automatic",
     image: chevy,
-    rentalPrice: {
-      perDay: 90,
-    },
+    rentalPrice: 90,
   },
 ];
 
@@ -216,14 +204,14 @@ export default function CarSelection() {
               <div className="flex flex-row  border-gray-300 border-t-2">
                 <div className="flex flex-col border-gray-300 border-r-2 mr-4">
                   <h2 className="mr-4 text-[32px] font-semibold font-sans">
-                    ${carInfo.rentalPrice.perDay}
+                    ${carInfo.rentalPrice}
                   </h2>
 
                   <h2 className="mr-4 text-[18px] text-gray-500">Per day</h2>
                 </div>
                 <div className="flex flex-col">
                   <h2 className="text-[32px] font-semibold font-sans">
-                    ${carInfo.rentalPrice.perDay * days}
+                    ${carInfo.rentalPrice * days}
                   </h2>
                   <h2 className="text-[18px] text-gray-500">Total</h2>
                 </div>

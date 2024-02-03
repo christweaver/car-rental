@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function ReserveCar() {
   const router = useRouter();
   const { query } = router;
-  // console.log(query.searchBar);
+  console.log(query.searchBar);
   const searchInfo = JSON.parse(decodeURIComponent(query.searchBar));
 
   return (

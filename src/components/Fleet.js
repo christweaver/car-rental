@@ -7,6 +7,7 @@ import carDoor from "../assests/carDoor.png";
 import carPass from "../assests/carPass.png";
 import MPG from "../assests/MPG.png";
 import carManual from "../assests/carManual.png";
+import { useRouter } from "next/router";
 export default function Fleet() {
   const cars = [
     {
@@ -18,6 +19,7 @@ export default function Fleet() {
       passenger: "5 Passenger",
       mpg: "33 MPG",
       trans: "Automatic",
+      rentalPrice: 60,
     },
     {
       id: 2,
@@ -28,6 +30,7 @@ export default function Fleet() {
       passenger: "5 Passenger",
       mpg: "25 MPG",
       trans: "Manual",
+      rentalPrice: 80,
     },
     {
       id: 3,
@@ -38,6 +41,7 @@ export default function Fleet() {
       passenger: "5 Passenger",
       mpg: "30 MPG",
       trans: "Automatic",
+      rentalPrice: 50,
     },
     {
       id: 4,
@@ -48,8 +52,21 @@ export default function Fleet() {
       passenger: "5 Passenger",
       mpg: "27 MPG",
       trans: "Automatic",
+      rentalPrice: 60,
     },
   ];
+  const router = useRouter();
+
+  function reserve(car) {
+    let vehicle = {
+      name: car.name,
+      year: car.year,
+      rentalPrice: car.rentalPrice,
+    };
+    const serializedCarObject = encodeURIComponent(JSON.stringify(vehicle));
+
+    router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
+  }
 
   return (
     <div className=" mt-20 flex flex-col justify-center items-center">
@@ -65,7 +82,10 @@ export default function Fleet() {
             <Image src={car.image} alt="" className="w-[300px] h-[200px]" />
             <h1 className=" font-bold text-[20px]">{car.name}</h1>
             <h2 className="font-bold text-[20px]"> {car.year}</h2>
-            <button className="border-2  bg-black text-yellow-500 rounded-lg text-[20px] my-2 px-8 py-3">
+            <button
+              className="border-2  bg-black text-yellow-500 rounded-lg text-[20px] my-2 px-8 py-3"
+              onClick={() => reserve(car)}
+            >
               Reserve Now
             </button>
             <div className="flex flex-row justify-end items-center ">
