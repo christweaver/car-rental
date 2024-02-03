@@ -33,8 +33,8 @@ export default function Experience() {
           <p className="text-[24px] text-yellow-500">We know travel</p>
         </div>
         <p className="text-[18px]  text-zinc-500 font-black">
-          With 10 years of experience, we're ready to help you find your perfect
-          car
+          With 10 years of experience, we are ready to help you find your
+          perfect car
         </p>
       </div>
     </div>

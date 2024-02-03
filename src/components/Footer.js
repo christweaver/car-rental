@@ -51,7 +51,7 @@ export default function Footer() {
                 LOCATIONS
               </Link>
               <Link href={"/"} className=" hover:border-b-2 border-yellow-500">
-                FAQ'S
+                FAQS
               </Link>
             </div>
           </div>

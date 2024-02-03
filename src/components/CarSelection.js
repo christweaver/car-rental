@@ -136,7 +136,7 @@ export default function CarSelection() {
     const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
     console.log({ days });
     setdays(days);
-  }, []);
+  }, [getStateFromUrl]);
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
 
@@ -169,6 +169,7 @@ export default function CarSelection() {
           >
             <div className="w-1/3 h-full">
               <Image
+                alt=""
                 className="w-full h-full rounded-xl"
                 src={carInfo.image}
                 width={400}
@@ -179,12 +180,16 @@ export default function CarSelection() {
               <h1 className="text-[24px] font-semibold">{carInfo.types}</h1>
               <h2 className="text-[18px]">{carInfo.brand}</h2>
               <div className="flex flex-row items-center">
-                <Image className="w-[25px] h-[30px]" src={carPass} />
+                <Image className="w-[25px] h-[30px]" src={carPass} alt="" />
                 <p>{carInfo.numberOfPassengers}</p>
-                <Image className="w-[40px] h-[50px]" src={carDoor} />
+                <Image className="w-[40px] h-[50px]" src={carDoor} alt="" />
                 <p className="mr-2">{carInfo.numberOfDoors}</p>
 
-                <Image className="w-[30px] h-[30px] mr-2" src={carManual} />
+                <Image
+                  className="w-[30px] h-[30px] mr-2"
+                  src={carManual}
+                  alt=""
+                />
                 <p>{carInfo.transmission}</p>
               </div>
               <div className="flex flex-row my-2 justify-start items-start">

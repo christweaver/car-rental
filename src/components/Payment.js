@@ -40,7 +40,7 @@ export default function Payment({ searchInfo }) {
     const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
     console.log({ days });
     setdays(days);
-  }, [searchInfo]);
+  }, [getStateFromUrl]);
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
 

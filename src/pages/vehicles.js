@@ -11,7 +11,7 @@ import ford from "../assests/ford.jpg";
 import chevy from "../assests/chevy.jpg";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
-export default function vehicles() {
+export default function Vehicles() {
   const carOptions = [
     {
       types: "Economy",
@@ -113,18 +113,23 @@ export default function vehicles() {
                 src={carInfo.image}
                 width={400}
                 height={200}
+                alt=""
               />
             </div>{" "}
             <div className="flex flex-col w-1/3">
               <h1 className="text-[24px] font-semibold">{carInfo.types}</h1>
               <h2 className="text-[18px]">{carInfo.brand}</h2>
               <div className="flex flex-row items-center">
-                <Image className="w-[25px] h-[30px]" src={carPass} />
+                <Image className="w-[25px] h-[30px]" alt="" src={carPass} />
                 <p>{carInfo.numberOfPassengers}</p>
-                <Image className="w-[40px] h-[50px]" src={carDoor} />
+                <Image className="w-[40px] h-[50px]" alt="" src={carDoor} />
                 <p className="mr-2">{carInfo.numberOfDoors}</p>
 
-                <Image className="w-[30px] h-[30px] mr-2" src={carManual} />
+                <Image
+                  className="w-[30px] h-[30px] mr-2"
+                  alt=""
+                  src={carManual}
+                />
                 <p>{carInfo.transmission}</p>
               </div>
               <div className="flex flex-row my-2 justify-start items-start">

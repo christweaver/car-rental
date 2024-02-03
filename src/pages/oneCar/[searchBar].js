@@ -8,7 +8,7 @@ import Image from "next/image";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 let apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-export default function searchBar() {
+export default function SearchBar() {
   const router = useRouter();
   const { query } = router;
   const formatLocation = ({ value }) => {
