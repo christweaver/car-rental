@@ -165,7 +165,7 @@ export default function CarSelection() {
 
       router.push(`/carReserve/${encodeURIComponent(serializedCarObject)}`);
     },
-    [getStateFromUrl]
+    [getStateFromUrl, router]
   );
 
   return (
