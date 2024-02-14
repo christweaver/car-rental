@@ -11,6 +11,7 @@ import mustang from "../assests/mustang1.png";
 import ford from "../assests/ford.jpg";
 import chevy from "../assests/chevy.jpg";
 
+// Formats time
 function MilitaryTimeToStandardTime(militaryTime) {
   if (!militaryTime) return ""; // Handle undefined or null case
 
@@ -22,10 +23,10 @@ function MilitaryTimeToStandardTime(militaryTime) {
     hour12: true,
   });
 }
-
+// Prop passed from oneCar page
 export default function CarCard({ searchInfo }) {
   let carImage;
-
+  // Changes the image depending on the car name
   switch (searchInfo.name) {
     case "Toyota Prius":
       carImage = redcar;

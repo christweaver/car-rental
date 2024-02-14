@@ -1,10 +1,7 @@
 export default function reservations() {
+  // Mock login page
   return (
     <div className=" bg-gray-100">
-      {/* <h1 className="text-[28px] ml-6 pt-2">
-        Log in to view your reservations
-      </h1> */}
-
       <div className="flex justify-center items-center h-screen">
         <div className="bg-white rounded-lg p-8 shadow-xl w-96 space-y-6">
           <h2 className="text-3xl font-semibold text-center">

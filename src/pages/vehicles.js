@@ -12,6 +12,7 @@ import chevy from "../assests/chevy.jpg";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
 export default function Vehicles() {
+  // Car options based off type
   const carOptions = [
     {
       types: "Economy",
@@ -87,6 +88,7 @@ export default function Vehicles() {
     },
   ];
   const router = useRouter();
+  // Pulls info from map below onClick and then is encoded
   const handleSearchButtonClick = (carInfo) => {
     let vehicle = {
       name: carInfo.brand,
@@ -95,6 +97,7 @@ export default function Vehicles() {
     };
     const serializedCarObject = encodeURIComponent(JSON.stringify(vehicle));
 
+    // Routes user to oneCar. Second page to route to oneCar
     router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
   };
 

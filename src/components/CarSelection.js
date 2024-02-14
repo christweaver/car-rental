@@ -16,6 +16,7 @@ var duration = require("dayjs/plugin/duration");
 dayjs.extend(duration);
 import { useEffect, useState } from "react";
 
+// Possible car types to choose from
 const carOptions = [
   {
     types: "Economy",
@@ -96,10 +97,12 @@ export default function CarSelection() {
   let router = useRouter();
   const { query } = router;
 
+  // Decodes URI
   const getStateFromUrl = useCallback(() => {
     return JSON.parse(decodeURIComponent(query.searchBar));
   }, [query.searchBar]);
 
+  // After user chooses car the data is passsed and added into a new object named searchBar
   function change(carInfo) {
     const search = getStateFromUrl();
     const {
@@ -110,9 +113,10 @@ export default function CarSelection() {
       pickUpTime,
       dropOffTime,
     } = search;
-
+    // Pulled from users choice
     let { types, brand, rentalPrice } = carInfo;
 
+    // Combines the two objects
     const searchBar = {
       types,
       brand,
@@ -124,29 +128,29 @@ export default function CarSelection() {
       pickUpTime,
       dropOffTime,
     };
-
+    // Encodes new object
     const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
-
+    // routes to page with encoded uri
     router.push(`/carReserve/${encodeURIComponent(serializedCarObject)}`);
   }
-
+  // Sets the days variable and is multiplied by car rental price then rendered
   useEffect(() => {
     const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
       getStateFromUrl();
 
     const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
-    console.log({ days });
     setdays(days);
   }, [getStateFromUrl]);
+
+  // Formatting date and time
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
-
     const dropOffDateFormatted = dayjs(dropOffDate + " " + dropOffTime);
     const numberOfHours = dayjs
       .duration(dropOffDateFormatted.diff(pickUpFormatted))
       .asHours();
-    console.log({ numberOfHours });
 
+    // Logic for amount of days car is being rented into hours
     const HOURS_IN_A_DAY = 24;
     if (numberOfHours < HOURS_IN_A_DAY) return 1;
 
@@ -156,12 +160,12 @@ export default function CarSelection() {
     if (remainder) {
       return Math.floor(numberOfDays + 1);
     }
-    console.log({ numberOfDays, remainder });
     return numberOfDays;
   };
 
   return (
     <div className="bg-zinc-100">
+      {/* Renders options from car types above */}
       <div className="flex flex-col justify-center items-center w-11/12 ml-16">
         {carOptions.map((carInfo, index) => (
           <div

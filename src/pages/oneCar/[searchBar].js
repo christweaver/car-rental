@@ -20,6 +20,7 @@ export default function SearchBar() {
   const [puTime, setpuTime] = useState("");
   const [doTime, setdoTime] = useState("");
 
+  // Decodes query and sets the value to searchInfo
   useEffect(() => {
     const fetchData = async () => {
       if (query.searchBar) {
@@ -27,6 +28,7 @@ export default function SearchBar() {
           const decodedSearchBar = decodeURIComponent(query.searchBar);
           const parsedSearchInfo = JSON.parse(decodedSearchBar);
           setSearchInfo(parsedSearchInfo);
+          console.log(searchInfo);
         } catch (error) {
           console.error("Error parsing JSON:", error);
         }
@@ -44,6 +46,7 @@ export default function SearchBar() {
   const handleInputChange = (e) => {
     e.preventDefault();
 
+    // Creates new object to be encoded for the car card component
     if (searchInfo) {
       const { rentalPrice, name, year, brand } = searchInfo;
 
@@ -63,11 +66,12 @@ export default function SearchBar() {
       const serializedCarObject = encodeURIComponent(
         JSON.stringify(updatedSearchInfo)
       );
-
+      // Reroutes user to the same page with updated info being rendered in car card
       router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
     }
   };
 
+  // Styles for google autocomplete
   const customStyles = {
     control: (base) => ({
       ...base,

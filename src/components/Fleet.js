@@ -9,6 +9,7 @@ import MPG from "../assests/MPG.png";
 import carManual from "../assests/carManual.png";
 import { useRouter } from "next/router";
 export default function Fleet() {
+  // Four cars on homepage for instant booking
   const cars = [
     {
       id: 1,
@@ -55,7 +56,9 @@ export default function Fleet() {
       rentalPrice: 60,
     },
   ];
+
   const router = useRouter();
+  // Pulls car info from map onclick
 
   function reserve(car) {
     let vehicle = {
@@ -64,7 +67,7 @@ export default function Fleet() {
       rentalPrice: car.rentalPrice,
     };
     const serializedCarObject = encodeURIComponent(JSON.stringify(vehicle));
-
+    // routes user to encoded uri. Second page to route to oneCar
     router.push(`/oneCar/${encodeURIComponent(serializedCarObject)}`);
   }
 

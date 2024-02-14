@@ -8,6 +8,7 @@ export default function Review({ rentalPrice }) {
         <span>Rental Cost (Per Day)</span>
         <span>${rentalPrice}</span>
       </div>
+      {/* Sets the tax to be added to CompletedBanner */}
       <div className="flex justify-between">
         <span>Tax ({(tax * 100).toFixed(0)}%)</span>
         <span>${(rentalPrice * tax).toFixed(2)}</span>

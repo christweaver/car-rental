@@ -5,6 +5,7 @@ import { useEffect } from "react";
 var duration = require("dayjs/plugin/duration");
 dayjs.extend(duration);
 
+// Prop passed from carReserve page
 export default function Payment({ searchInfo }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -17,7 +18,6 @@ export default function Payment({ searchInfo }) {
   const [cvv, setCvv] = useState("");
 
   const { rentalPrice } = searchInfo;
-  console.log(searchInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Payment submitted");
@@ -26,29 +26,28 @@ export default function Payment({ searchInfo }) {
   const [days, setDays] = useState(0);
   const [tax, setTax] = useState(0.1);
   let taxTotal = rentalPrice * tax;
-  console.log(taxTotal);
   let router = useRouter();
   const { query } = router;
 
+  // Decode the URI, sets the days variable and is multiplied by car rental price then rendered
   useEffect(() => {
     const getStateFromUrl = () => {
       return JSON.parse(decodeURIComponent(query.searchBar));
     };
-
     const { pickUpDate, dropOffDate, pickUpTime, dropOffTime } =
       getStateFromUrl();
-    console.log(pickUpDate);
+
     const days = countDays(pickUpDate, dropOffDate, pickUpTime, dropOffTime);
     setDays(days);
   }, [query.searchBar]);
+
+  // Formatting date and time
   const countDays = (pickUpDate, dropOffDate, pickUpTime, dropOffTime) => {
     const pickUpFormatted = dayjs(pickUpDate + " " + pickUpTime);
-
     const dropOffDateFormatted = dayjs(dropOffDate + " " + dropOffTime);
     const numberOfHours = dayjs
       .duration(dropOffDateFormatted.diff(pickUpFormatted))
       .asHours();
-    console.log({ numberOfHours });
 
     const HOURS_IN_A_DAY = 24;
     if (numberOfHours < HOURS_IN_A_DAY) return 1;
@@ -59,7 +58,6 @@ export default function Payment({ searchInfo }) {
     if (remainder) {
       return Math.floor(numberOfDays + 1);
     }
-    console.log({ numberOfDays, remainder });
     return numberOfDays;
   };
 

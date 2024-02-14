@@ -13,6 +13,7 @@ export default function ReserveCar() {
     const fetchData = async () => {
       try {
         if (query.searchBar) {
+          // decodes and parses uri
           const decodedSearchBar = decodeURIComponent(query.searchBar);
           const parsedSearchInfo = JSON.parse(decodedSearchBar);
           setSearchInfo(parsedSearchInfo);
@@ -30,6 +31,7 @@ export default function ReserveCar() {
       <Navbar />
       {searchInfo ? (
         <>
+          {/* Passes query data when available  */}
           <CompletedBanner searchInfo={searchInfo} />
           <Payment searchInfo={searchInfo} />
         </>

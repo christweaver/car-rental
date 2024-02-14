@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useEffect } from "react";
 let apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
+// Sets the placeholder for pick up location with google autocomplete
 const pLocactionStart = {
   label:
     "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
@@ -53,6 +55,8 @@ const pLocactionStart = {
     types: ["airport", "point_of_interest", "establishment"],
   },
 };
+
+// Sets the placeholder for drop off location with google autocomplete
 const dLocationStart = {
   label:
     "San Francisco International Airport (SFO) (SFO), San Francisco, CA, USA",
@@ -121,6 +125,7 @@ export default function Search() {
   function search(e) {
     e.preventDefault();
 
+    // Sets data from user inputs
     const searchBar = {
       pickUp: formatLocation(puLocation),
       dropOff: formatLocation(doLocation),
@@ -130,28 +135,28 @@ export default function Search() {
       dropOffTime: doTime,
     };
 
-    console.log(puLocation, doLocation, puDate, doDate, puTime, doTime);
     const serializedCarObject = encodeURIComponent(JSON.stringify(searchBar));
-
+    // routes to page with encoded uri
     router.push(`/chooseCar/${encodeURIComponent(serializedCarObject)}`);
   }
 
+  // Styling for google auto complete fields
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: "7px 10px", // py-3 and px-4
-      margin: "8px 8px 0", // mx-2 and mb-2
-      border: "1px solid #ccc", // border with a default color
-      borderRadius: "6px", // rounded-md
+      padding: "7px 10px",
+      margin: "8px 8px 0",
+      border: "1px solid #ccc",
+      borderRadius: "6px",
     }),
   };
   const dropStyles = {
     control: (base) => ({
       ...base,
-      padding: "7px 10px", // py-3 and px-4
-      margin: "8px 8px 8px", // mx-2 and mb-2
-      border: "1px solid #ccc", // border with a default color
-      borderRadius: "6px", // rounded-md
+      padding: "7px 10px",
+      margin: "8px 8px 8px",
+      border: "1px solid #ccc",
+      borderRadius: "6px",
     }),
   };
   return (

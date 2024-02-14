@@ -2,6 +2,7 @@ import Image from "next/image";
 import car from "../assests/car.jpg";
 import Search from "./Search";
 export default function Hero() {
+  // This renders main search fields
   return (
     <div className="hero-section bg-white text-black pt-8 relative">
       <div className="flex flex-row justify-center">

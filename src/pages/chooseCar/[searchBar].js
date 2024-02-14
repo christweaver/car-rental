@@ -9,6 +9,7 @@ export default function ChooseCar() {
   const { query } = router;
   const [searchInfo, setSearchInfo] = useState(null);
 
+  // Decodes the query and sets the searchInfo variable
   useEffect(() => {
     const fetchData = async () => {
       if (query.searchBar) {
