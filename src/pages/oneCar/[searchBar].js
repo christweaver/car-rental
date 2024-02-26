@@ -8,13 +8,110 @@ import Image from "next/image";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 let apiKey = process.env.NEXT_PUBLIC_API_KEY;
+// Sets the placeholder for pick up location with google autocomplete
+const pLocactionStart = {
+  label:
+    "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
+  value: {
+    description:
+      "Salt Lake City International Airport (SLC), West Terminal Drive, Salt Lake City, UT, USA",
+    matched_substrings: [
+      {
+        length: 4,
+        offset: 0,
+      },
+    ],
+    place_id: "ChIJ6fTXZ4vzUocRGUhZ9SZDH28",
+    reference: "ChIJ6fTXZ4vzUocRGUhZ9SZDH28",
+    structured_formatting: {
+      main_text: "Salt Lake City International Airport (SLC)",
+      main_text_matched_substrings: [
+        {
+          length: 4,
+          offset: 0,
+        },
+      ],
+      secondary_text: "West Terminal Drive, Salt Lake City, UT, USA",
+    },
+    terms: [
+      {
+        offset: 0,
+        value: "Salt Lake City International Airport (SLC)",
+      },
+      {
+        offset: 44,
+        value: "West Terminal Drive",
+      },
+      {
+        offset: 65,
+        value: "Salt Lake City",
+      },
+      {
+        offset: 81,
+        value: "UT",
+      },
+      {
+        offset: 85,
+        value: "USA",
+      },
+    ],
+    types: ["airport", "point_of_interest", "establishment"],
+  },
+};
+
+// Sets the placeholder for drop off location with google autocomplete
+const dLocationStart = {
+  label:
+    "San Francisco International Airport (SFO) (SFO), San Francisco, CA, USA",
+  value: {
+    description:
+      "San Francisco International Airport (SFO) (SFO), San Francisco, CA, USA",
+    matched_substrings: [
+      {
+        length: 2,
+        offset: 0,
+      },
+    ],
+    place_id: "ChIJVVVVVYx3j4ARP-3NGldc8qQ",
+    reference: "ChIJVVVVVYx3j4ARP-3NGldc8qQ",
+    structured_formatting: {
+      main_text: "San Francisco International Airport (SFO) (SFO)",
+      main_text_matched_substrings: [
+        {
+          length: 2,
+          offset: 0,
+        },
+      ],
+      secondary_text: "San Francisco, CA, USA",
+    },
+    terms: [
+      {
+        offset: 0,
+        value: "San Francisco International Airport (SFO) (SFO)",
+      },
+      {
+        offset: 49,
+        value: "San Francisco",
+      },
+      {
+        offset: 64,
+        value: "CA",
+      },
+      {
+        offset: 68,
+        value: "USA",
+      },
+    ],
+    types: ["airport", "point_of_interest", "establishment"],
+  },
+};
 
 export default function SearchBar() {
   const router = useRouter();
   const { query } = router;
   const [searchInfo, setSearchInfo] = useState(null);
-  const [puLocation, setpuLocation] = useState("");
-  const [doLocation, setdoLocation] = useState("");
+  const [puLocation, setpuLocation] = useState(pLocactionStart);
+  const [doLocation, setdoLocation] = useState(dLocationStart);
   const [puDate, setpuDate] = useState("");
   const [doDate, setdoDate] = useState("");
   const [puTime, setpuTime] = useState("");
