@@ -101,7 +101,6 @@ export default function SearchBar() {
           </Link>
           <div className="flex flex-col w-1/4">
             <GooglePlacesAutocomplete
-              apiKey={apiKey}
               name="puLocation"
               selectProps={{
                 value: puLocation,
@@ -114,9 +113,9 @@ export default function SearchBar() {
                 types: ["airport"],
                 country: ["us"],
               }}
+              apiKey={apiKey}
             />
             <GooglePlacesAutocomplete
-              apiKey={apiKey}
               name="puLocation"
               selectProps={{
                 value: doLocation,
@@ -129,6 +128,7 @@ export default function SearchBar() {
                 types: ["airport"],
                 country: ["us"],
               }}
+              apiKey={apiKey}
             />
           </div>
           <div className="flex flex-col">
