@@ -2,6 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+
+https://github.com/christweaver/car-rental/assets/100533989/75458924-3d0c-4325-a455-93a78f549088
+
+
+
 First, run the development server:
 
 ```bash
