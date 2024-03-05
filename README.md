@@ -4,6 +4,9 @@ Welcome to my car rental app! This application is built using Next.js and integr
 
 https://github.com/christweaver/car-rental/assets/100533989/75458924-3d0c-4325-a455-93a78f549088
 
+## Technologies Used
+- Next.js
+- Google Places API
 
 ## Features
 - Location Suggestions: Utilizes the Google Places Autocomplete API to suggest pickup and drop-off locations as users type.
