@@ -31,8 +31,7 @@ Clone this repository to your local machine.
 git clone https://github.com/your-username/car-rental.git
 ```
 Navigate to the project directory.
-```
-bash
+```bash
 cd mock-car-rental-app
 ```
 Install dependencies using npm or yarn.
