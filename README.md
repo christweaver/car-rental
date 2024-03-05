@@ -1,5 +1,5 @@
 
-CruiseFleet-A Car Rental App
+## CruiseFleet-A Car Rental App
 Welcome to my car rental app! This application is built using Next.js and integrates the Google Places Autocomplete API to provide convenient location suggestions for users when they input their rental pickup and drop-off locations. Additionally, users can select specific car models or browse through various categories like trucks, compact cars, sports cars, and more.
 
 Features
